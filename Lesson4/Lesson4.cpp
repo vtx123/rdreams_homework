@@ -144,31 +144,31 @@ int main()
     std::cout << "Please enter a number of month: " << std::endl;
     std::cin >> numberOfMonth;
 
-    switch (numberOfMonth)
+    switch (static_cast<Month>(numberOfMonth)) 
     {
-    case 1:
-    case 2:
-    case 12:
-        std::cout << "Winter";
-        break;
-    case 3:
-    case 4:
-    case 5:
-        std::cout << "Spring";
-        break;
-    case 6:
-    case 7:
-    case 8:
-        std::cout << "Summer";
-        break;
-    case 9:
-    case 10:
-    case 11:
-        std::cout << "Autumn";
-        break;
-    default:
-        std::cout << "You enter a wrong number, programm NOT able to recognise a season!" << std::endl;
-        break;
+        case Month::DECEMBER:
+        case Month::JANUARY:
+        case Month::FEBRUARY:
+            std::cout << "Winter";
+            break;
+        case Month::MARCH:
+        case Month::APRIL:
+        case Month::MAY:
+            std::cout << "Spring";
+            break;
+        case Month::JUNE:
+        case Month::JULY:
+        case Month::AUGUST:
+            std::cout << "Summer";
+            break;
+        case Month::SEPTEMBER:
+        case Month::OCTOBER:
+        case Month::NOVEMBER:
+            std::cout << "Autumn";
+            break;
+        default:
+            std::cout << "You enter a wrong number, programm NOT able to recognise a season!" << std::endl;
+            break;
     }
 
     return 0;
