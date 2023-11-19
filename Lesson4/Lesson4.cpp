@@ -44,7 +44,7 @@ int main()
     std::cout << "Please enter a number: " << std::endl;
     std::cin >> divNumber;
 
-    if (divNumber != 0 && divNumber % 5 == 0 && divNumber % 11 == 0) {
+    if (divNumber % 5 == 0 && divNumber % 11 == 0) {
         std::cout << "WIN! Your number " << divNumber << " was divided by 5 and 11." << std::endl;
     }
     else {
@@ -55,7 +55,6 @@ int main()
     int fAngle = 0;
     int sAngle = 0;
     int tAngle = 0;
-    int acuteConditionCounter = 0; // we must have 2 acute anlges
 
     std::cout << "Please enter the first angle: " << std::endl;
     std::cin >> fAngle;
@@ -64,17 +63,7 @@ int main()
     std::cout << "Please enter the third number: " << std::endl;
     std::cin >> tAngle;
 
-    if (fAngle < 90) {
-        acuteConditionCounter++;
-    }
-    if (sAngle < 90) {
-        acuteConditionCounter++;
-    }
-    if (tAngle < 90) {
-        acuteConditionCounter++;
-    }
-
-    if ((fAngle + sAngle + tAngle) == 180 && acuteConditionCounter == 2) {
+    if ((fAngle + sAngle + tAngle) == 180 && (sAngle > 0 && sAngle > 0 && tAngle > 0)) {
         std::cout << "WIN! Your angles were build a triangle!" << std::endl;
     }
     else {
@@ -103,7 +92,7 @@ int main()
     std::cin >> month;
 
     std::cout << "You enter ";
-    switch ((enum Month)month)
+    switch (static_cast<Month>(month))
     {
     case Month::JANUARY:
         std::cout << "JANUARY";
