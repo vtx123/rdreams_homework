@@ -43,6 +43,7 @@ Generated\ Files/
 # Visual Studio 2022
 *.vcxproj
 *.sln
+*.filters
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
