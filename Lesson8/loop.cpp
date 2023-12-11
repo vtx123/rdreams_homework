@@ -1,5 +1,4 @@
 #include <iostream>
-#include "loop.hpp"
 
 void printNaturalNumbersLoopGoingDown(int count){
     for(int i = count; i > 0; i--){

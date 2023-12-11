@@ -1,16 +1,15 @@
 #include <iostream>
-#include "recursion.hpp"
 
 void printNaturalNumbersGoingDown(int count){
     if(count > 0){
         std::cout << count << " ";
-        printNaturalNumbersGoingDown(--count);
+        printNaturalNumbersGoingDown(count - 1);
     }
 }
 
 void printNaturalNumbersGoingUp(int count){
     if(count > 0){
-        printNaturalNumbersGoingUp(--count);
-        std::cout << count+1 << " ";
+        printNaturalNumbersGoingUp(count - 1);
+        std::cout << count << " ";
     }
 }

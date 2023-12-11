@@ -1,7 +1,4 @@
-#ifndef loop_hpp
-#define loop_hpp
+#pragma once
 
 void printNaturalNumbersLoopGoingDown(int count);
 void printNaturalNumbersLoopGoingUp(int count);
-
-#endif
