@@ -4,10 +4,12 @@
 void translateArray(int numbers[], int size){
     for(int i = 0; i < size; i++){
         if(numbers[i] > 0){
-            std::cout << numbers[i] * 2 << " ";
+            numbers[i] *= 2;
         }else {
-            std::cout << "0 ";
+            numbers[i] = 0;
         }
+
+        std::cout << numbers[i] << " ";
     }
 }
 
@@ -36,10 +38,8 @@ int main() {
             continue;
         }
 
-        if(std::all_of(subString.begin(),subString.end(), ::isdigit)){
-            array[i] = stoi(subString);
-            i++;
-        }
+        array[i] = stoi(subString);
+        i++;
     }
     std::cout << "Result: ";
     translateArray(array, arraySize);

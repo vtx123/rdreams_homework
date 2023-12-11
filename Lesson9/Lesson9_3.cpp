@@ -2,10 +2,10 @@
 #include <iostream>
 
 bool isPalindrom(const char str[]){
-    unsigned lenght = static_cast<int>(strlen(str));
+    unsigned length = static_cast<int>(strlen(str));
 
-    for(int i = 0; i < lenght/2; i++){
-        if(str[i] != str[lenght - i - 1]){
+    for(int i = 0; i < length/2; i++){
+        if(str[i] != str[length - i - 1]){
             return false;
         }
     }
