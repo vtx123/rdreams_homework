@@ -1,7 +1,7 @@
 // Lesson 12 2
 #include <iostream>
 
-enum class SortingDirection {ByRows, ByColumn};
+enum class SortingDirection { ByRows, ByColumn };
 
 const int ROWS = 5;
 const int COLUMNS = 10;
@@ -43,44 +43,28 @@ void quickSort(int array[], int low, int high)
 
 void sort(int arr[ROWS][COLUMNS], SortingDirection sd)
 {
-    int arrByRow[ROWS];
-    int arrByCol[COLUMNS];
-    if(sd == SortingDirection::ByRows){
-        for(int i = 0; i < COLUMNS; i++) {
-            for(int j = 0; j < ROWS; j++) {
-                arrByRow[j] = arr[j][i];
-            }
-            quickSort(arrByRow, 0, ROWS);
-
-            for(int k = 0; k < ROWS; k++) {
-                arr[k][i] = arrByRow[k];
-            }
+    int arrByCol[ROWS];
+    if (sd == SortingDirection::ByRows) {
+        for (int i = 0; i < COLUMNS; i++) {
+            quickSort(arr[i], 0, COLUMNS-1);
         }
-        std::cout << "Sorted by rows array: " << std::endl;
-    } else {
-        for(int i = 0; i < ROWS; i++){
-            for(int j = 0; j < COLUMNS; j++) {
-                arrByCol[j] = arr[i][j];
-            }
-            quickSort(arrByCol, 0, COLUMNS);
-
-            for(int k = 0; k < COLUMNS; k++) {
-                arr[i][k] = arrByCol[k];
-            }
-        }
-        std::cout << "Sorted by column array: " << std::endl;
     }
+    else {
+        for (int i = 0; i < COLUMNS; i++) {
+            for (int j = 0; j < ROWS; j++) {
+                arrByCol[j] = arr[j][i];
+            }
 
-    for(int i = 0; i < ROWS; i++) {
-        for(int j = 0; j < COLUMNS; j++) {
-            std::cout << "[" << arr[i][j] << "]";
+            quickSort(arrByCol, 0, ROWS-1);
+
+            for (int k = 0; k < ROWS; k++) {
+                arr[k][i] = arrByCol[k];
+            }
         }
-        std::cout << std::endl;
     }
-    std::cout << std::endl;
 }
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
 
     srand(time(nullptr));
 
@@ -96,8 +80,25 @@ int main(int argc, const char * argv[]) {
     }
     std::cout << std::endl << std::endl;
 
+    std::cout << "Sorted by rows array: " << std::endl;
     sort(arr, SortingDirection::ByRows);
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLUMNS; j++) {
+            std::cout << "[" << arr[i][j] << "]";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+
+    std::cout << "Sorted by column array: " << std::endl;
     sort(arr, SortingDirection::ByColumn);
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLUMNS; j++) {
+            std::cout << "[" << arr[i][j] << "]";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
 
     return 0;
 }
