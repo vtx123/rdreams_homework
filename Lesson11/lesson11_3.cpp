@@ -7,8 +7,8 @@ const int ROW = 4;
 void passArrV1(int arr_2d[ROW][COL])
 {
     std::cout << "Passing array v1: " << std::endl;
-        for(int j = COL - 1; j >= 0 ; j--){
-            for(int i = 0; i < ROW; i++){
+    for (int j = COL - 1; j >= 0; j--) {
+        for (int i = 0; i < ROW; i++) {
             arr_2d[i][j] = 0;
             std::cout << "[" << i << ":" << j << "] ";
         }
@@ -20,14 +20,15 @@ void passArrV1(int arr_2d[ROW][COL])
 void passArrV2(int arr_2d[ROW][COL])
 {
     std::cout << "Passing array v2: " << std::endl;
-    for(int i = ROW - 1; i >= 0; i--){
-        if(i % 2 == 0){
-            for(int j = 0; j < COL; j++){
+    for (int i = ROW - 1; i >= 0; i--) {
+        if (i % 2 == 0) {
+            for (int j = 0; j < COL; j++) {
                 arr_2d[i][j] = 0;
                 std::cout << "[" << i << ":" << j << "] ";
             }
-        }else{
-            for(int j = COL - 1; j >= 0 ; j--){
+        }
+        else {
+            for (int j = COL - 1; j >= 0; j--) {
                 arr_2d[i][j] = 0;
                 std::cout << "[" << i << ":" << j << "] ";
             }
