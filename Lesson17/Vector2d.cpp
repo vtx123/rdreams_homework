@@ -48,6 +48,11 @@ std::ostream& operator << (std::ostream & out, const Vector2d & vec2d) {
     return out;
 }
 
+std::istream& operator>>(std::istream& in, Vector2d& vec2d) {
+    in >> vec2d._x >> vec2d._y;
+    return in;
+}
+
 Vector2d operator+(const Vector2d& leftVector, const Vector2d& rightVector) {
     float x = leftVector._x + rightVector._x;
     float y = leftVector._y + rightVector._y;

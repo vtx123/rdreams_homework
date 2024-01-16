@@ -39,4 +39,7 @@ int main()
 
     std::cout << Vector2d::instanceCount() << std::endl;
 
+    std::cin >> sum;
+    std::cout << sum << std::endl;
+
 }
