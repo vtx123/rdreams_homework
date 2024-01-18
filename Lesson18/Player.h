@@ -11,14 +11,16 @@ public:
     ~Player();
 
     std::string getName() const { return m_name; }
+    int getHealth() const { return m_health; }
     int getBaseDamage(int distance) const { return m_weapon->getDamageRate(distance); }
 
     void setWeapon(Weapon* weapon);
     void setPlayerClass(PlayerClass* playerClass);
     void setHealth(int health) { m_health = health; }
+    void setDamage(int damage);
     bool isEliminated() const { return m_health <= 0; }
 
-    void attack(const Player& other, int distance);
+    void attack(Player& other, int distance);
 
 private:
     int m_health = 100;

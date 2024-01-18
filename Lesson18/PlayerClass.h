@@ -32,23 +32,28 @@ public:
     //See Xcom or other turn-based like game for reference what miss chance is
 };
 
-class AttackerClass : public DefaultClass
+class AttackerClass : virtual public DefaultClass // ACHTUNG! Diamond problem
 {
     //#TODO
+public:
+    float getDamageMultiplier() const override { return 1.1f; }
 };
 
-class LuckyManClass : public DefaultClass
+class LuckyManClass : virtual public DefaultClass // ACHTUNG! Diamond problem
 {
     //#TODO high miss chance rate
+public:
+    float getMissChance() const override { return 0.5f; }
 };
 
 //multiple inheritance for pure demonstration purpose
 //In general it's best to avoid it unless really neccessary
 //Or specific architectural patterns
-class BerserkClass : public AttackerClass, LuckyManClass
+class BerserkClass : public AttackerClass, LuckyManClass // ACHTUNG! Diamond problem
 {
     //High attack rate (inherited from AttackerClass)
     //High miss chance (inherited from LuckyManClass)
     //#TODO: Very low armor rate
-
+public:
+    float getArmorMultiplier() const override { return 0.3f; }
 };

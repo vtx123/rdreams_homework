@@ -21,8 +21,14 @@ void Player::setPlayerClass(PlayerClass* playerClass)
     m_class = playerClass;
 }
 
-void Player::attack(const Player& other, int distance)
+void Player::attack(Player& other, int distance)
 {
+    if (isEliminated()) {
+        std::cout << "Player " << getName() << " Died and can't attack!" <<
+            " with weapon " << m_weapon->getName() << std::endl;
+        return;
+    }
+
     if (&other == this)
     {
         std::cout << "\n-------FRIENDLY FIRE!-------\n";
@@ -36,18 +42,30 @@ void Player::attack(const Player& other, int distance)
 
     //More damage-related modifiers can be added here
     //TODO: Add miss-chance of the class into account
-    const int damage = static_cast<int>(m_weapon->getDamageRate(distance) * m_class->getDamageMultiplier() / other.m_class->getArmorMultiplier());
+    int damage = 0;
+    float missChance = (1 + rand() % 9) * 0.1;
+    if (missChance > other.m_class->getMissChance()) {
+        damage = static_cast<int>(m_weapon->getDamageRate(distance) * m_class->getDamageMultiplier() / other.m_class->getArmorMultiplier());
+
+        std::cout << "Player " << getName() << " : " << m_health << "HP, with weapon [" << m_weapon->getName() 
+            << "] --> attacked Player " << other.getName() << " on damage " << damage << std::endl;
+    }
+    else {
+        std::cout << "Player " << getName() << " : " << m_health << "HP, with weapon [" << m_weapon->getName()
+            << "] --> attacked Player " << other.getName() << " and MISS" << std::endl;
+    }
+
+    other.setDamage(damage);
+}
+
+void Player::setDamage(int damage) {
     m_health -= damage;
 
-    std::cout << "Player " << getName() << " attacked Player " << other.getName() <<
-        " with damage " << damage << std::endl;
-
-    std::cout << "Health left: " << m_health << std::endl;
-
+    std::cout << getName() << " Health left: " << m_health << std::endl;
     if (m_health <= 0)
     {
         m_health = 0;	//for consistency. For example UI may not support properly negative values
 
-        std::cout << "Player " << other.getName() << " was eliminated!\n";
+        std::cout << "Player " << getName() << " was eliminated!\n";
     }
 }
