@@ -6,6 +6,8 @@ int main()
     DynamicIntArray arr1;
     DynamicIntArray arr2 = DynamicIntArray(10);
 
+    const int arr1NewSize = 5;
+    arr1.setSize(arr1NewSize);
     const int arr1Size = arr1.getSize();
     for (int i = 0; i < arr1Size; i++) {
         arr1.push_back(i * 10);
