@@ -5,8 +5,8 @@
 
 int main()
 {
-    DynamicIntArray arr1;
-    DynamicIntArray arr2 = DynamicIntArray(10);
+    DynamicIntArray<int> arr1;
+    DynamicIntArray<int> arr2 = DynamicIntArray<int>(10);
 
     const int arr1NewSize = 5;
     arr1.setSize(arr1NewSize);
@@ -32,7 +32,7 @@ int main()
     }
     std::cout << std::endl << std::endl;
 
-    DynamicIntArray arr3(arr1);
+    DynamicIntArray<int> arr3(arr1);
     const int arr4Size = arr3.getSize();
     for (int i = 0; i < arr4Size; i++) {
         std::cout << "[" << arr3[i] << "] ";

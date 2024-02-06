@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdlib>
 
+template <typename T>
 class DynamicIntArray
 {
 public:
@@ -11,14 +12,14 @@ public:
     DynamicIntArray(std::size_t size);
 
     //copy c-tor
-    DynamicIntArray(const DynamicIntArray& other);
+    DynamicIntArray(const DynamicIntArray<T>& other);
 
     //free allocated memory
     ~DynamicIntArray();
 
-    DynamicIntArray& operator=(const DynamicIntArray& other);
+    DynamicIntArray<T>& operator=(const DynamicIntArray<T>& other);
 
-    int& operator[](std::size_t index);
+    T& operator[](std::size_t index);
 
     //delete previous memory, create new inner array with updated size
     void setSize(std::size_t newSize);
@@ -31,10 +32,17 @@ public:
     // Copy old content to new inner array
     // insert element at the last index
     // update size
-    void push_back(int element);
+    void push_back(T element);
 
+    // Reserve memory
+    void reserve(std::size_t reservedSpace);
+    std::size_t getCapacity() const;
+    void shrinkToFit();
+    void pop_back();
+    T back() const;
+    bool operator==(const DynamicIntArray<T>& other) const;
 private:
     std::size_t m_size;
     int m_position;
-    int* m_elements;
+    T* m_elements;
 };
