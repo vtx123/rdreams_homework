@@ -11,10 +11,10 @@ struct Student
     float averageEvaluation = 0.f;
 };
 
-float averageEvaluation(Student *st) {
+float averageEvaluation(const Student &st) {
     float mark = 0.f;
     const int amountOfSubject = 3;
-    mark = (st->markForMath + st->markForProg + st->markForBio) / amountOfSubject;
+    mark = (st.markForMath + st.markForProg + st.markForBio) / amountOfSubject;
 
     return mark;
 }
@@ -46,7 +46,7 @@ Student* findTheBestStudent(Student* st, const int size) {
     return bestStudent;
 }
 
-int coutSuccessedStudents(Student* st, const int size) {
+int countSuccessedStudents(Student* st, const int size) {
     const int successCeiling = 75;
     int counter = 0;
     for (int i = 0; i < size; i++) {
@@ -69,7 +69,7 @@ int main()
 
     srand(time(nullptr));
     for (int i = 0; i < SIZE; i++) {
-        students[i].averageEvaluation = averageEvaluation(&students[i]);
+        students[i].averageEvaluation = averageEvaluation(students[i]);
 
         std::cout << "Evaluation of Mathematic = " << students[i].markForMath << std::endl;
         std::cout << "Evaluation of Programming = " << students[i].markForProg << std::endl;
@@ -90,7 +90,7 @@ int main()
     std::cout << "The Best student is: " << findTheBestStudent(students, SIZE)->name << std::endl;
     std::cout << std::endl << std::endl;
 
-    std::cout << "Amount of Success Students: " << coutSuccessedStudents(students, SIZE) << std::endl;
+    std::cout << "Amount of Success Students: " << countSuccessedStudents(students, SIZE) << std::endl;
 
 
 }
