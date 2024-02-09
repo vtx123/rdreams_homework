@@ -1,5 +1,6 @@
 #include "DynamicIntArray.h"
 #include <iostream>
+#include <cassert>
 
 // Default c-tor
 DynamicIntArray::DynamicIntArray() :m_size(0), m_position(0) {
@@ -36,9 +37,8 @@ DynamicIntArray& DynamicIntArray::operator=(const DynamicIntArray& other) {
 }
 
 int& DynamicIntArray::operator[](std::size_t index) {
-    if (index >= m_size) {
-        index = m_size - 1;
-    }
+    assert(index >= 0 && index < m_size);
+ 
     return m_elements[index];
 }
 
@@ -78,17 +78,19 @@ void DynamicIntArray::clear() {
 void DynamicIntArray::push_back(int element) {
     if (m_position + 1 >= m_size) {
         int* tmp = new int[m_position + 1];
-        for (int i = 0; i < m_size; i++) {
-            tmp[i] = m_elements[i];
-        }
+        std::copy(m_elements, m_elements + m_size, tmp);
+        //for (int i = 0; i < m_size; i++) {
+        //    tmp[i] = m_elements[i];
+        //}
         tmp[m_position] = element;
         m_size = m_position + 1;
         delete[] m_elements;
-        m_elements = new int[m_size];
-        for (int i = 0; i < m_size; i++) {
-            m_elements[i] = tmp[i];
-        }
-        delete[] tmp;
+        m_elements = tmp;
+        //m_elements = new int[m_size];
+        //for (int i = 0; i < m_size; i++) {
+        //    m_elements[i] = tmp[i];
+        //}
+        //delete[] tmp;
     }
     else {
         m_elements[m_position] = element;
