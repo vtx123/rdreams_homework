@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(std::string name, int health, PlayerClass pClass) :_name(name), _health(health), _pClass(pClass) {
+Player::Player(const std::string &name, int health, PlayerClass pClass) :_name(name), _health(health), _pClass(pClass) {
     if (health < 0) {
         health = 1;
     }

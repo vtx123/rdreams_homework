@@ -12,7 +12,7 @@ enum class PlayerClass {
 
 class Player {
 public:
-    Player(std::string name, int health, PlayerClass pClass);
+    Player(const std::string &name, int health, PlayerClass pClass);
     ~Player();
 
     void setWeapon(Weapon*);
