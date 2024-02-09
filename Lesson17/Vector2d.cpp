@@ -5,7 +5,7 @@ int Vector2d::_icount = 0;
 Vector2d::Vector2d() : _x(0.0f), _y(0.0f) {
     _icount++;
 }
-Vector2d::Vector2d(float x, float y): _x(x), _y(y) {
+Vector2d::Vector2d(float x, float y) : _x(x), _y(y) {
     _icount++;
 }
 
@@ -28,22 +28,33 @@ Vector2d::~Vector2d() {
     _icount--;
 }
 
-float Vector2d::operator()(){
+float Vector2d::operator()() {
     return static_cast<float>(sqrt(pow(_x, 2) + pow(_y, 2)));
 }
 
 float& Vector2d::operator[](int i) {
-    return i > 0 ? _y : _x;
+    if (i <= 0)
+    {
+        return _x;
+    }
+    else
+    {
+        return _y;
+    }
 }
 
-Vector2d& Vector2d::operator=(const Vector2d & vec2d) {
-    _x = vec2d._x;
-    _y = vec2d._y;
+Vector2d& Vector2d::operator=(const Vector2d& vec2d) {
+    if (_x != vec2d._x) {
+        _x = vec2d._x;
+    }
+    if (_y != vec2d._y) {
+        _y = vec2d._y;
+    }
 
     return *this;
 }
 
-std::ostream& operator << (std::ostream & out, const Vector2d & vec2d) {
+std::ostream& operator << (std::ostream& out, const Vector2d& vec2d) {
     out << "Output: {" << vec2d._x << "; " << vec2d._y << "}";
     return out;
 }
