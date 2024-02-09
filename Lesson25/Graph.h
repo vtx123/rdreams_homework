@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <stack>
 
 class Graph
 {
@@ -34,8 +35,13 @@ public:
     void addEdge(int v, int w) override;
 
     void BFS(int vertex = 0) override;
-
+    int numberOfNodesInLevel(int level);
+    bool isStronglyConnected() const;
 private:
+    GraphAdjList transpose() const;
+    void DFS(int s, bool visitedV[]);
+    void fillOrder(int s, bool visitedV[], std::stack<int>& Stack) const;
+
     std::vector<std::list<int> > m_list;
 };
 
