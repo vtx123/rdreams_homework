@@ -1,7 +1,6 @@
 #include "Game.h"
 
 #include <iostream>
-#include <fstream>
 #include <chrono> //for sleep delays
 #include <thread> //for sleep delays
 #include <time.h> //for rand generator init
@@ -144,7 +143,7 @@ namespace UI
         printModifiers(munchkin);
         std::cout << "+------------------------------------------------------------+" << std::endl;
         std::cout << "| 1. I came in this world for OPEN a DOORS and KICK an ASSES |" << std::endl;
-        std::cout << "|    as you see, door i'd already opened.                    |" << std::endl;
+        std::cout << "|    as you see, door i've already opened.                    |" << std::endl;
         std::cout << "| 2. CRYING in the corner like beluga.                       |" << std::endl;
         std::cout << "| 3. LEAVE the DUNGEON with sparkling flashes.               |" << std::endl;
         std::cout << "+------------------------------------------------------------+" << std::endl;
@@ -226,18 +225,6 @@ enum class GameState {
     GAME_QUIT
 };
 
-void loadFromFile(const std::string& fileName) {
-    std::fstream fin(fileName);
-    std::string first, last;
-    int id;
-    float avr;
-    
-    while (fin >> first) {
-        fin >> last >> id >> avr;
-        //addStudent(Student(first, last, id, avr));
-    }
-}
-
 void Game::run()
 {
     //Can be moved to config file for pre-setup of the game
@@ -249,7 +236,7 @@ void Game::run()
             case GameState::GAME_INIT:
             {
                 std::srand(static_cast<int>(std::time(0)));
-                loadFromFile("items.txt");
+                // loadFromFile("items.txt");
                 //Setup Random hand for the player
                 generateMunchkinInitialCards();
                 
@@ -265,12 +252,16 @@ void Game::run()
             }
             case GameState::GAME_PLAY:
             {
-                while (m_munchkin.getLevel() < WinningLevel)
-                {
-                    UI::printPlayerDeck(&m_munchkin);
+                UI::printPlayerDeck(&m_munchkin);
 
-                    UI::pressAnyKeyToContinue();
-                    UI::printMonsterSelection();
+                UI::pressAnyKeyToContinue();
+                UI::printMonsterSelection();
+
+                if(m_munchkin.getLevel() < WinningLevel){
+                    curState = GameState::GAME_FIGHT;
+                }else{
+                    std::cout << "YOU are awesome WINNER!!!!" << std::endl;
+                    curState = GameState::GAME_QUIT;
                 }
                 break;
             }
@@ -320,6 +311,7 @@ void Game::run()
                         }
                     }
                 }
+                curState = GameState::GAME_PLAY;
                 break;
             }
             case GameState::GAME_RESTART:
@@ -330,7 +322,11 @@ void Game::run()
                 break;
         }
     }
-    
+    // ULTRA brightest sparks burn out your eyes highlighting your gamelife mistakes. 
+    // Your body will superb dung for local flora.
+    // But who will care...
+    // Good Luck Machkin (Name)!
+
         //State pattern may be a good candidate here
         //Every case may be its own state with transition rules, e.g.
         //Start->InProgress->Win/Runaway/ApplyModifiers, Runaway->Lost, ApplyModifiers->InProgress

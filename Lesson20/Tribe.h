@@ -4,8 +4,11 @@
 enum class Tribe
 {
     Human,
+    Animal,
+    Plant,
     Undead,
     Zombie,
+    Robot,
     God,
     Count	//call static_cast<int>(Tribe::Count) to get the number of entries in enum
 };

@@ -12,5 +12,6 @@ public:
     std::vector<Item*> generateItems() const;
 
 private:
+    void loadFromFile(const std::string& fileName);
     std::vector<Item*> m_itemsDataBase;
 };
