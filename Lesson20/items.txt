@@ -1,0 +1,4 @@
+Weapon;The Sword of DOOM;5
+UndeadWeapon;Stinky knife;2
+UndeadWeapon;Holy grenade;4
+UndeadWeapon;Holy sword;4

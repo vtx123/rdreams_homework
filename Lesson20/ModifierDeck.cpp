@@ -7,18 +7,18 @@ ModifierDeck::ModifierDeck()
     m_modifiersDatabase =
     {
         {new SimpleModifier{3}},
-        {new SimpleModifier{3}},
-        {new SimpleModifier{2}},
-        {new SimpleModifier{2}},
-        {new SimpleModifier{2}},
+//        {new SimpleModifier{3}},
+//        {new SimpleModifier{2}},
+//        {new SimpleModifier{2}},
+//        {new SimpleModifier{2}},
         {new SimpleModifier{4}},
+//        {new SimpleModifier{1}},
         {new SimpleModifier{1}},
-        {new SimpleModifier{1}},
-        {new SimpleModifier{1}},
+//        {new SimpleModifier{1}},
         {new DoubleMunchkinLevel{}},
-        {new DoubleMunchkinLevel{}},
+//        {new DoubleMunchkinLevel{}},
         {new HalvesMonsterLevel{Tribe::Undead}},
-        {new HalvesMonsterLevel{Tribe::God}}
+//        {new HalvesMonsterLevel{Tribe::God}}
     };
 }
 

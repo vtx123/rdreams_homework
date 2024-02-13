@@ -55,10 +55,15 @@ class HalvesMonsterLevel : public Modifier
 public:
     //#TODO: cut monster's power in 2 if he is of type tribe
 
-    HalvesMonsterLevel(Tribe tribe) {} //implement
+    HalvesMonsterLevel(Tribe tribe) : m_Tribe(tribe) { } //implement
     virtual void apply(Munchkin* munchkin, Monster* monster) override {} //implement
 
-    virtual std::string getFullInfo() const override { return ""; } //implement
+    virtual std::string getFullInfo() const override {
+        
+            return "Cut out " + getTribeString(m_Tribe) + " power x2" ; } //implement
+    
+private:
+    Tribe m_Tribe;
 };
 
 //#TODO: Add unique Modifier munchkin/monster specific
