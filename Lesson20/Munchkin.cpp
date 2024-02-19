@@ -1,6 +1,16 @@
+#include <functional>
 #include "Munchkin.h"
 #include "Item.h"
 #include "Modifier.h"
+
+void Munchkin::removeModifierFromHand(){
+    popModifier(rand() % m_modifiers.size());
+}
+void Munchkin::removeItemEquipped(bool maxPower){
+    if(maxPower){
+        m_items.pop_back();
+    }
+}
 
 void Munchkin::updateLevelBy(int levels)
 {
@@ -10,14 +20,27 @@ void Munchkin::updateLevelBy(int levels)
     }
     else
     {
+        for(auto i: m_items){
+            if(i->isLevelUpBlocked()) {
+                return;
+            }
+        }
         m_level += levels;
     }
 
 }
 
+void Munchkin::addModifier(Modifier* modifier){
+    m_modifiers.push_back(modifier);
+}
+
 void Munchkin::addItem(Item* item)
 {
     m_items.push_back(item);
+    std::sort(m_items.begin(), m_items.end(), [](Item *a, Item *b)
+              {
+                  return a->getBasePower() < b->getBasePower();
+              });
 }
 
 void Munchkin::setItems(const std::vector<Item*>& items)

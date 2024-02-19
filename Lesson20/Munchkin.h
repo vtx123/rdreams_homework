@@ -24,12 +24,13 @@ public:
     const std::vector<Item*>& getItems() const;
 
     //TODO: Implement, by index or by pointer or at random
-    void removeModifierFromHand() {}
-    void removeItemEquipped() {}
+    void removeModifierFromHand();
+    void removeItemEquipped(bool maxPower);
 
     Modifier* popModifier(int idx);
     const std::vector<Modifier*>& getModifiers() const { return m_modifiers; }
     void addModifiers(const std::vector<Modifier*>& modifiers) { m_modifiers = modifiers; }
+    void addModifier(Modifier* modifier);
 
 private:
     uint m_level = 1;

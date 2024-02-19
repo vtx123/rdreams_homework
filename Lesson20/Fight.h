@@ -4,6 +4,7 @@
 //forward declaration is sufficient enough
 class Munchkin;
 class Monster;
+class DeckHelper;
 
 enum class FightResult
 {
@@ -30,7 +31,7 @@ public:
     int getMonsterPower() const { return m_monsterPower; }
 
     void runawayFlow();
-    void victoryFlow();
+    void victoryFlow(DeckHelper& deckHelper);
 
 private:
     void calculateMunchkinPower();

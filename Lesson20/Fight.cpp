@@ -5,6 +5,8 @@
 #include "Munchkin.h"
 #include "Monster.h"
 #include "Runaway.h"
+#include "DeckHelper.h"
+#include <assert.h>
 
 void Fight::start()
 {
@@ -18,9 +20,11 @@ void Fight::start()
 void Fight::applyModifier(int choice)
 {
     Modifier* modifier = m_munchkin->popModifier(choice);
+    
     if (modifier == nullptr)
     {
         //Give some assert/warning in debug to a user that modifier is null so something is wrong
+        assert(modifier == nullptr);
         return;
     }
 
@@ -38,7 +42,7 @@ void Fight::runawayFlow()
     m_result = FightResult::MonsterWon;
 }
 
-void Fight::victoryFlow()
+void Fight::victoryFlow(DeckHelper& deckHelper)
 {
     //#TODO: Implement at LEAST ONE victory policy similar to runaway policy
     //Possible policies are:
@@ -47,7 +51,13 @@ void Fight::victoryFlow()
     //  Increase Level by 0,1,2
 
     m_munchkin->updateLevelBy(1);
-
+    
+    Bonus* bonus = m_monster->getBonusPolicy();
+    if(bonus != nullptr){
+        bonus->apply(m_munchkin, deckHelper);
+    }
+    
+    
     m_result = FightResult::MunchkinWon;
 }
 

@@ -18,8 +18,11 @@ constexpr const std::string getTribeString(Tribe tribe)
     switch (tribe)
     {
     case Tribe::Human: return "HUMAN";
+    case Tribe::Animal: return "ANIMAL";
+    case Tribe::Plant: return "PLANT";
     case Tribe::Undead: return "UNDEAD";
     case Tribe::Zombie: return "ZOMBIE";
+    case Tribe::Robot: return "ROBOT";
     case Tribe::God: return "GOD";
     case Tribe::Count:
     default:

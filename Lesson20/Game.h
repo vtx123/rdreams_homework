@@ -1,8 +1,9 @@
 #pragma once
 #include "Munchkin.h"
-#include "ItemDeck.h"
-#include "MonsterDeck.h"
-#include "ModifierDeck.h"
+#include "DeckHelper.h"
+//#include "ItemDeck.h"
+//#include "MonsterDeck.h"
+//#include "ModifierDeck.h"
 
 class Game
 {
@@ -16,7 +17,8 @@ private:
 
 private:
     Munchkin m_munchkin;
-    ItemDeck m_itemsDeck;
-    ModifierDeck m_modifiersDeck;
-    MonsterDeck m_monstersDeck;
+    DeckHelper m_Decks;
+//    ItemDeck m_itemsDeck;
+//    ModifierDeck m_modifiersDeck;
+//    MonsterDeck m_monstersDeck;
 };

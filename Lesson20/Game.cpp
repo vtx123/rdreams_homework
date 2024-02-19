@@ -7,9 +7,18 @@
 
 #include "Fight.h"
 #include "Item.h"
-#include "ItemDeck.h"
+//#include "ItemDeck.h"
 #include "Modifier.h"
 #include "Monster.h"
+
+enum class GameState {
+    GAME_INIT = 0,
+    GAME_MENU,
+    GAME_PLAY,
+    GAME_FIGHT,
+    GAME_RESTART,
+    GAME_QUIT
+};
 
 namespace UI
 {
@@ -64,7 +73,7 @@ namespace UI
 
     void printMunchkinLost(Monster* monster)
     {
-        std::cout << "-------YOU'VE LOST to \"" << monster->getName() << "\"Monster!---------\n";
+        std::cout << "--- YOU'VE LOST to \"" << monster->getName() << "\"Monster! ---\n";
         //#TODO: Print runaway policy monster dealt to Munchkin
     }
 
@@ -88,14 +97,15 @@ namespace UI
         // Теплый след от телепорта и легкий туман сырых стен подземелья не помогают вам вспомнить ваше имя.
         // А может быть три последние бокала были лишние?...
         // НННеважно, Отныне вас зовут:
-        std::cout << "+------------------------------------------------------------+" << std::endl;
-        std::cout << "|           WELCOME TO TEXT-BASED MANCKIN GAME!!!            |" << std::endl;
-        std::cout << "+------------------------------------------------------------+" << std::endl;
-        std::cout << "|     Bone-chilling droplet falls by your nape.              |" << std::endl;
-        std::cout << "| The warm teleportation imprint and mild haze of the wet    |" << std::endl;
-        std::cout << "| dungeon don't help you remember your name.                 |" << std::endl;
-        std::cout << "| Or maybe... last three wine were extra?..                  |" << std::endl;
-        std::cout << "+------------------------------------------------------------+"<< std::endl << std::endl;
+        
+        std::cout << "+----------------------------------------------------------------------------+" << std::endl;
+        std::cout << "|                   WELCOME TO TEXT-BASED MANCKIN GAME!!!                    |" << std::endl;
+        std::cout << "+----------------------------------------------------------------------------+" << std::endl;
+        std::cout << "|        Bone-chilling droplet falls by your nape!                           |" << std::endl;
+        std::cout << "| The warm teleportation imprint and mild haze of the wet dungeon            |" << std::endl;
+        std::cout << "| don't help you remember your name.                                         |" << std::endl;
+        std::cout << "|                                Or maybe... last three wine were extra?..   |" << std::endl;
+        std::cout << "+----------------------------------------------------------------------------+" << std::endl << std::endl;
         
         std::cout << "a-a-Anyway, now YOUR NAME is: ";
         
@@ -103,7 +113,8 @@ namespace UI
         std::cin >> name;
         munchkin->setName(name);
 
-        std::cout << std::endl << "                   · · · · · · · · · · · ·                    " << std::endl << std::endl;
+        std::cout << std::endl << "                           · · · · · · · · · · · ·                            ";
+        std::cout << std::endl << std::endl;
 
         UI::printTossing();
     }
@@ -111,63 +122,84 @@ namespace UI
     void printItems(Munchkin* munchkin)
     {
         const std::vector<Item*>& items = munchkin->getItems();
-        std::cout << "+        · · · · · with YOUR current OUTFIT · · · · ·        +"<< std::endl;
+        std::cout << "| Your OUTFIT:                                                               |"<< std::endl;
         for (Item* item : items)
         {
-            std::cout << item->getFullInfo();
+            std::cout << "         > " << item->getFullInfo();
         }
     }
 
     void printModifiers(Munchkin* munchkin)
     {
         const std::vector<Modifier*> modifiers = munchkin->getModifiers();
-        std::cout << "+           · · · · · and your HAND CARDS · · · · ·          +"<< std::endl;
+        std::cout << "| Hand CARDS:                                                                |"<< std::endl;
         int idx = 1;
         for (Modifier* modifier : munchkin->getModifiers())
         {
-            std::cout << idx++ << ". " << modifier->getFullInfo() << std::endl;
+            std::cout << "   [ "<< idx++ << ". ] = " << modifier->getFullInfo() << std::endl;
         }
-    }
-
-    void printPlayerDeck(Munchkin* munchkin)
-    {
-        // Что ты будешь делать дальше?
-        // 1. Я пришел в этот мир чтобы ОТКРЫВАТЬ ДВЕРИ и НАДИРАТЬ ЖЕПЫ, как видешь двери я уже открыл.
-        // 2. Седеть в углу и реветь как белуга.
-        // 3. Покинуть данж красиво.
-        std::cout << "+------------------------------------------------------------+" << std::endl;
-        std::cout << "|                  WHAT will YOU do NEXT?                    |" << std::endl;
-        std::cout << "+------------------------------------------------------------+" << std::endl;
-        std::cout << "  Munchkin " << "\"" << munchkin->getName() << "\", level " << munchkin->getLevel() << std::endl;
-        printItems(munchkin);
-        printModifiers(munchkin);
-        std::cout << "+------------------------------------------------------------+" << std::endl;
-        std::cout << "| 1. I came in this world for OPEN a DOORS and KICK an ASSES |" << std::endl;
-        std::cout << "|    as you see, door i've already opened.                    |" << std::endl;
-        std::cout << "| 2. CRYING in the corner like beluga.                       |" << std::endl;
-        std::cout << "| 3. LEAVE the DUNGEON with sparkling flashes.               |" << std::endl;
-        std::cout << "+------------------------------------------------------------+" << std::endl;
-        std::cout << ">> ";
-        int ch = 1;
-        std::cin >> ch;
-    }
-
-    void printMunchkinPower(Munchkin* munchkin, Fight* fight)
-    {
-        std::cout << "-----\"" << munchkin->getName() << "\" power: " << fight->getMunchkinPower() << "-------\n";
-    }
-
-    void printMonsterPower(Monster* monster, Fight* fight)
-    {
-        std::cout << "-----\"" << monster->getName() << "\" power: " << fight->getMonsterPower() << "-------\n";
+//        std::cout << std::endl;
     }
 
     enum class UserInput
     {
         None,
         Runaway,
-        ApplyModifier
+        ApplyModifier,
+        Continue,
+        Waiting,
+        Quit
     };
+
+static bool smallUI = false;
+    UserInput printPlayerDeck(Munchkin* munchkin)
+    {
+        // Что ты будешь делать дальше?
+        // 1. Я пришел в этот мир чтобы ОТКРЫВАТЬ ДВЕРИ и НАДИРАТЬ ЖЕПЫ, как видешь двери я уже открыл.
+        // 2. Седеть в углу и реветь как белуга.
+        // 3. Покинуть данж красиво.
+        std::cout << "+----------------------------------------------------------------------------+" << std::endl;
+        std::cout << "|                            WHAT will YOU do NEXT?                          |" << std::endl;
+        std::cout << "+----------------------------------------------------------------------------+" << std::endl;
+        std::cout << "  Munchkin " << "\"" << munchkin->getName() << "\", level " << munchkin->getLevel() << std::endl;
+        printItems(munchkin);
+        printModifiers(munchkin);
+        if(!smallUI) {
+            std::cout << "+----------------------------------------------------------------------------+" << std::endl;
+            std::cout << "| 1. I came in this world for OPEN a DOORS and KICK an ASSES ...             |" << std::endl;
+            std::cout << "|    as you see, door i've already opened.                                   |" << std::endl;
+            std::cout << "| 2. CRYING in the corner like beluga.                                       |" << std::endl;
+            std::cout << "| 3. LEAVE the DUNGEON with sparkling flashes.                               |" << std::endl;
+            std::cout << "+----------------------------------------------------------------------------+" << std::endl;
+        }else {
+            std::cout << "+----------------------------------------------------------------------------+" << std::endl;
+            std::cout << "| 1. Next FIGHT          2. CRYING in the corner      3. LEAVE the DUNGEON   |" << std::endl;
+            std::cout << "+----------------------------------------------------------------------------+" << std::endl;
+        }
+        std::cout << ">> ";
+        int ch = 1;
+        std::cin >> ch;
+        
+        if(ch == 1){
+            return UserInput::Continue;
+        } else if(ch == 2) {
+            return UserInput::Waiting;
+        } else if(ch == 3){
+            return UserInput::Quit;
+        } else {
+            return UserInput::Waiting;
+        }
+    }
+
+    void printMunchkinPower(Munchkin* munchkin, Fight* fight)
+    {
+        std::cout << "--- \"" << munchkin->getName() << "\" power: " << fight->getMunchkinPower() << " ---\n";
+    }
+
+    void printMonsterPower(Monster* monster, Fight* fight)
+    {
+        std::cout << "--- \"" << monster->getName() << "\" power: " << fight->getMonsterPower() << " ---\n";
+    }
 
     UserInput readUserBehavior()
     {
@@ -208,22 +240,29 @@ namespace UI
 
     void printMonsterInfo(Monster* monster)
     {
-        std::cout << "\n--------Monster \"" << monster->getName() << "\"" << ", of " <<
-            getTribeString(monster->getTribe()) << ", level " << monster->getLevel() << " --------" << std::endl << std::endl;
+        std::cout << "\n--- Monster \"" << monster->getName() << "\"" << ", of "
+                  << getTribeString(monster->getTribe()) << ", level " << monster->getLevel()
+        << ". " << monster->getRunawayPolicy()->getFullInfo() << " ";
+        if(monster->getBonusPolicy() != nullptr){
+            std::cout << monster->getBonusPolicy()->getFullInfo();
+        }
+        std::cout << " ---" << std::endl << std::endl;
         //#TODO: Print RUNAWAY POLICIES info similar to items print in printPlayerDeck()
     }
 
-
+    void printUserFastQuit(Munchkin* munchkin){
+        std::cout << std::endl << std::endl;
+        std::cout << "+----------------------------------------------------------------------------+" << std::endl;
+        std::cout << "| ULTRA brightest sparks burn out eyes highlighting your gamelife mistakes.  |" << std::endl;
+        std::cout << "| Your body will superb dung for local flora.                                |" << std::endl;
+        std::cout << "|                                                  But who will care...      |" << std::endl;
+        std::cout << "|                                                                            |" << std::endl;
+        std::cout << "   Good Luck Machkin " << munchkin->getName() << std::endl;
+        std::cout << "+----------------------------------------------------------------------------+" << std::endl;
+        std::cout << "                           · · · · · · · · · · · ·                            " << std::endl;
+    }
+    
 } //namespace UI
-
-enum class GameState {
-    GAME_INIT = 0,
-    GAME_MENU,
-    GAME_PLAY,
-    GAME_FIGHT,
-    GAME_RESTART,
-    GAME_QUIT
-};
 
 void Game::run()
 {
@@ -235,7 +274,6 @@ void Game::run()
         switch (curState) {
             case GameState::GAME_INIT:
             {
-                std::srand(static_cast<int>(std::time(0)));
                 // loadFromFile("items.txt");
                 //Setup Random hand for the player
                 generateMunchkinInitialCards();
@@ -252,17 +290,27 @@ void Game::run()
             }
             case GameState::GAME_PLAY:
             {
-                UI::printPlayerDeck(&m_munchkin);
-
-                UI::pressAnyKeyToContinue();
-                UI::printMonsterSelection();
-
-                if(m_munchkin.getLevel() < WinningLevel){
+                if(m_munchkin.getLevel() < WinningLevel) {
+                    const UI::UserInput input = UI::printPlayerDeck(&m_munchkin);
+                    UI::smallUI = true;
+                    
+                    if(input == UI::UserInput::Continue){
+                        UI::printMonsterSelection();
+                    } else if(input == UI::UserInput::Waiting){
+                        // TODO: spawn random positive or negative modifire
+                        curState = GameState::GAME_FIGHT;
+                    } else if (input == UI::UserInput::Quit){
+                        UI::printUserFastQuit(&m_munchkin);
+                        
+                        curState = GameState::GAME_QUIT;
+                    }
+                    
                     curState = GameState::GAME_FIGHT;
-                }else{
-                    std::cout << "YOU are awesome WINNER!!!!" << std::endl;
+                } else {
+                    std::cout << "YOU are awesome WINNER!!!!" << std::endl << std::endl << std::endl;
                     curState = GameState::GAME_QUIT;
                 }
+
                 break;
             }
             case GameState::GAME_FIGHT:
@@ -285,7 +333,7 @@ void Game::run()
 
                     if (munchkinMonsterDifference > 0)
                     {
-                        fight.victoryFlow();
+                        fight.victoryFlow(m_Decks);
                         UI::printMunchkinWon();
                         UI::pressAnyKeyToContinue();
                     }
@@ -314,7 +362,7 @@ void Game::run()
                 curState = GameState::GAME_PLAY;
                 break;
             }
-            case GameState::GAME_RESTART:
+            case GameState::GAME_RESTART: // TODO: state for future
             {
                 curState = GameState::GAME_INIT;
             }
@@ -322,11 +370,6 @@ void Game::run()
                 break;
         }
     }
-    // ULTRA brightest sparks burn out your eyes highlighting your gamelife mistakes. 
-    // Your body will superb dung for local flora.
-    // But who will care...
-    // Good Luck Machkin (Name)!
-
         //State pattern may be a good candidate here
         //Every case may be its own state with transition rules, e.g.
         //Start->InProgress->Win/Runaway/ApplyModifiers, Runaway->Lost, ApplyModifiers->InProgress
@@ -335,11 +378,14 @@ void Game::run()
 
 void Game::generateMunchkinInitialCards()
 {
-    m_munchkin.setItems(m_itemsDeck.generateItems());
-    m_munchkin.addModifiers(m_modifiersDeck.generateModifiers());
+//    m_munchkin.setItems(m_itemsDeck.generateItems());
+//    m_munchkin.addModifiers(m_modifiersDeck.generateModifiers());
+    m_munchkin.setItems(m_Decks.generateItems());
+    m_munchkin.addModifiers(m_Decks.generateModifiers());
 }
 
 Monster* Game::generateMonster()
 {
-    return m_monstersDeck.generateMonster();
+//    return m_monstersDeck.generateMonster();
+    return  m_Decks.generateMonster();;
 }

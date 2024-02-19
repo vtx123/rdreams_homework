@@ -6,30 +6,24 @@
 
 ItemDeck::ItemDeck()
 {
-    //TODO: Move item's database to file in format:
-    // type;name; additional if needed params for the type
-    //For example:
-    //UndeadWeapon;"Holy Grenade";4		//should call UndeadWeapon("Holy Grenade", 4);
-
-    //TODO: Setup more items of diferent types
-//    m_itemsDataBase =
-//    { new Weapon{"The Sword of DOOM", 5},
-//    new UndeadWeapon{"Stinky knife", 2},
-//    new UndeadWeapon{"Holy grenade", 4} };
-
     loadFromFile("items.txt");
 }
 
 ItemDeck::~ItemDeck()
 {
     //TODO: FREE MEMORY
+    for ( int i = 0; i < m_itemsDataBase.size(); i++)
+    {
+        delete m_itemsDataBase[i];
+    }
 }
 
-std::vector<Item*> ItemDeck::generateItems() const
+Item* ItemDeck::getItem()
 {
     //TODO: PICK AT RANDOM SEVERAL ITEMS FROM DATABASE AS A PLAYER HAND
-    return { m_itemsDataBase[std::rand() % m_itemsDataBase.size()],
-             m_itemsDataBase[std::rand() % m_itemsDataBase.size()] };
+    auto val = m_itemsDataBase.back();
+    m_itemsDataBase.pop_back();
+    return val;
 }
 
 void ItemDeck::loadFromFile(const std::string& fileName) {
@@ -37,8 +31,6 @@ void ItemDeck::loadFromFile(const std::string& fileName) {
     std::string ItemType, ItemName, line;
     int power;
 
-
-//    while (fin >> ItemType) { // std::getline(fin, ItemType, ';')
     while (std::getline(fin, line, '\n')) { //
         std::getline(fin, ItemType, ';');
         std::getline(fin, ItemName, ';');

@@ -11,10 +11,12 @@ public:
     void setName(const std::string& name) { m_name = name; }
     const std::string getName() const { return m_name; }
     virtual std::string getFullInfo() const = 0;
-
+    bool isLevelUpBlocked() { return m_blockLevelUP; }
+    virtual ~Item() {}
 protected:
     std::string m_name;
     //other fields like description, image, category
+    bool m_blockLevelUP = false;
 
 private:
 };
@@ -126,7 +128,9 @@ public:
 class GodWeapon : public Weapon
 {
 public:
-    GodWeapon(const std::string& name, int power) : Weapon(name, power) {}
+    GodWeapon(const std::string& name, int power) : Weapon(name, power) {
+        m_blockLevelUP = true;
+    }
 
     virtual int getPower(Tribe monsterTribeModifier) const override
     {

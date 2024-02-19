@@ -10,9 +10,8 @@ public:
     ModifierDeck();
     ~ModifierDeck();
 
-    Modifier* generateModifier() const;
-
-    std::vector<Modifier*> generateModifiers() const { return m_modifiersDatabase; }
+    Modifier* geteModifier();
+    std::vector<Modifier*>& getDB() { return m_modifiersDatabase; }
 
 private:
     std::vector<Modifier*> m_modifiersDatabase;
