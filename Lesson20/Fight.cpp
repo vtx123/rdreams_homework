@@ -5,7 +5,6 @@
 #include "Munchkin.h"
 #include "Monster.h"
 #include "Runaway.h"
-#include "DeckHelper.h"
 #include <assert.h>
 
 void Fight::start()

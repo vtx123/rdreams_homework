@@ -1,4 +1,5 @@
 #include <functional>
+#include <algorithm>
 #include "Munchkin.h"
 #include "Item.h"
 #include "Modifier.h"
@@ -8,8 +9,20 @@ void Munchkin::removeModifierFromHand(){
 }
 void Munchkin::removeItemEquipped(bool maxPower){
     if(maxPower){
-        m_items.pop_back();
+        if (m_items.size() > 0) {
+            m_items.pop_back();
+        }
     }
+    // TODO: remove item by smth else
+}
+
+void Munchkin::removeItemByIndex(int idx){
+    if (idx >= m_items.size() || idx < 0)
+    {
+        return;
+    }
+    Item* item = m_items[idx];
+    m_items.erase(m_items.begin() + idx);
 }
 
 void Munchkin::updateLevelBy(int levels)
@@ -27,7 +40,6 @@ void Munchkin::updateLevelBy(int levels)
         }
         m_level += levels;
     }
-
 }
 
 void Munchkin::addModifier(Modifier* modifier){

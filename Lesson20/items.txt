@@ -1,5 +1,6 @@
+Type;Name;Power
 Weapon;The Sword of DOOM;5
-Weapon;Justice of the Axe;5
+Weapon;Justice of the Axe;3
 Weapon;Sausage Party Revolver;3
 Weapon;HellFire Mini Guuun;4
 UndeadWeapon;Stinky Knife;2
@@ -10,8 +11,10 @@ BioWeapon;SophiStick Stick;1
 BioWeapon;Kinda Magic Spit;2
 BioWeapon;Naruto Therapy Lectures;4
 BioWeapon;ThreeHanded SemiSword;3
+BioWeapon;Double Leather TerrorFlute;5
 RoboWeapon;SworDDR2;2
 RoboWeapon;Multithreading Martial Ads;3
 RoboWeapon;Mini Vibro Laser Bow;3
 RoboWeapon;Async IT Hammer;3
 GodWeapon;Annihilation Vaporizer;5
+

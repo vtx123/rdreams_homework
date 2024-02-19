@@ -10,7 +10,6 @@ public:
     ModifierDeck();
     ~ModifierDeck();
 
-    Modifier* geteModifier();
     std::vector<Modifier*>& getDB() { return m_modifiersDatabase; }
 
 private:

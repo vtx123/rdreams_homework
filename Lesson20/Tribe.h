@@ -12,8 +12,7 @@ enum class Tribe
     God,
     Count	//call static_cast<int>(Tribe::Count) to get the number of entries in enum
 };
-
-constexpr const std::string getTribeString(Tribe tribe)
+static const std::string getTribeString(Tribe tribe)
 {
     switch (tribe)
     {

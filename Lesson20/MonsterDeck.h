@@ -9,7 +9,6 @@ public:
     MonsterDeck();
     ~MonsterDeck();
 
-    Monster* getMonster();
     std::vector<Monster*>& getDB() { return m_monstersDatabase; }
 
 private:

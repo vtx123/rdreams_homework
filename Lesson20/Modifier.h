@@ -54,18 +54,18 @@ class HalvesMonsterLevel : public Modifier
 {
 public:
     //#TODO: cut monster's power in 2 if he is of type tribe
-
-    HalvesMonsterLevel(Tribe tribe) : m_Tribe(tribe) { } //implement
+    HalvesMonsterLevel(Tribe tribe) : m_Tribe(tribe) { }
     virtual void apply(Munchkin* munchkin, Monster* monster) override {
         if(m_Tribe == monster->getTribe()){
-            m_munchkinPowerChange = monster->getLevel() / 2;
+            m_monsterPowerChange = static_cast<int>( monster->getLevel() / 2) * -1;
         }
-    } //implement
+    }
 
     virtual std::string getFullInfo() const override {
         
-            return getTribeString(m_Tribe) + " power -x2" ; } //implement
-    
+            return getTribeString(m_Tribe) + " power -x2" ; 
+    }
+
 private:
     Tribe m_Tribe;
 };

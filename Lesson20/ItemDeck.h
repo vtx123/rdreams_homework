@@ -9,7 +9,6 @@ public:
     ItemDeck();
     ~ItemDeck();
 
-    Item* getItem();
     std::vector<Item*>& getDB() {
         return m_itemsDataBase;
     }

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 #include "ItemDeck.h"
 #include "MonsterDeck.h"
 #include "ModifierDeck.h"
@@ -14,6 +15,7 @@ public:
         shuffle(m_monstersDeck.getDB());
     }
     ~DeckHelper(){}
+
     template<typename T>
     void shuffle(std::vector<T*>& deck)
     {
@@ -25,24 +27,33 @@ public:
         }
     }
     Monster* generateMonster(){
-        return m_monstersDeck.getMonster();
+        return getCardFromDeck(m_monstersDeck.getDB());
     }
     std::vector<Item*> generateItems(){
-        return {m_itemsDeck.getItem(), m_itemsDeck.getItem()};
+        return { getCardFromDeck(m_itemsDeck.getDB()), getCardFromDeck(m_itemsDeck.getDB()) };
     }
     std::vector<Modifier*> generateModifiers(){
-        return {m_modifiersDeck.geteModifier(),
-            m_modifiersDeck.geteModifier(),
-            m_modifiersDeck.geteModifier(),
-            m_modifiersDeck.geteModifier(),
-            m_modifiersDeck.geteModifier()};
+        return { getCardFromDeck(m_modifiersDeck.getDB()),
+            getCardFromDeck(m_modifiersDeck.getDB()),
+            getCardFromDeck(m_modifiersDeck.getDB()),
+            getCardFromDeck(m_modifiersDeck.getDB()),
+            getCardFromDeck(m_modifiersDeck.getDB()) };
     }
     Item* randomItemFromDeck(){
-        return m_itemsDeck.getItem();
+        return getCardFromDeck(m_itemsDeck.getDB());
     }
     Modifier* randomModifierFromDeck(){
-        return m_modifiersDeck.geteModifier();
+        return getCardFromDeck(m_modifiersDeck.getDB());
     }
+
+    template<typename T>
+    T* getCardFromDeck(std::vector<T*>& deck)
+    {
+        auto val = deck.back();
+        deck.pop_back();
+        return val;
+    }
+
 private:
     ItemDeck m_itemsDeck;
     ModifierDeck m_modifiersDeck;

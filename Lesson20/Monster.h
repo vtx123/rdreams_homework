@@ -28,6 +28,5 @@ private:
     std::string m_name;
 
     Runaway* m_RunawayPolicy = nullptr;
-    //#TODO: Add bonus victory policy for losing to munchkin similar to Runaway policies
     Bonus* m_BonusPolicy = nullptr;
 };

@@ -26,6 +26,7 @@ public:
     //TODO: Implement, by index or by pointer or at random
     void removeModifierFromHand();
     void removeItemEquipped(bool maxPower);
+    void removeItemByIndex(int idx);
 
     Modifier* popModifier(int idx);
     const std::vector<Modifier*>& getModifiers() const { return m_modifiers; }
@@ -33,7 +34,7 @@ public:
     void addModifier(Modifier* modifier);
 
 private:
-    uint m_level = 1;
+    int m_level = 1;
     std::string m_name;
 
     std::vector<Item*> m_items;
