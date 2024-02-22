@@ -2,22 +2,22 @@
 #include <cstdlib>
 
 template <typename T>
-class DynamicIntArray
+class DynamicArray
 {
 public:
     //default c-tor
-    DynamicIntArray();
+    DynamicArray();
 
     //c-tor with size
-    DynamicIntArray(std::size_t size);
+    DynamicArray(std::size_t size);
 
     //copy c-tor
-    DynamicIntArray(const DynamicIntArray<T>& other);
+    DynamicArray(const DynamicArray<T>& other);
 
     //free allocated memory
-    ~DynamicIntArray();
+    ~DynamicArray();
 
-    DynamicIntArray<T>& operator=(const DynamicIntArray<T>& other);
+    DynamicArray<T>& operator=(const DynamicArray<T>& other);
 
     T& operator[](std::size_t index);
 
@@ -40,9 +40,9 @@ public:
     void shrinkToFit();
     void pop_back();
     T back() const;
-    bool operator==(const DynamicIntArray<T>& other) const;
+    bool operator==(const DynamicArray<T>& other) const;
 private:
-    std::size_t m_size;
-    int m_position;
+    std::size_t m_size; // real size of array
+    std::size_t m_capacity; // storage space size, can be equal or greater than m_size
     T* m_elements;
 };
